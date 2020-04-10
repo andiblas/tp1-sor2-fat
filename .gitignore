@@ -50,3 +50,7 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+read_boot
+read_first_partition
+read_mbr
+read_root
