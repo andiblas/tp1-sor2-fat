@@ -1,3 +1,5 @@
+#define FILE_TO_OPEN "/dev/loop0"
+
 typedef struct {
     unsigned char first_byte;
     unsigned char start_chs[3];

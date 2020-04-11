@@ -7,6 +7,9 @@ void print_file_info(Fat12Entry *entry) {
     switch(entry->filename[0]) {
         case 0x00:
             return; // unused entry
+        case 0x05:
+            printf("Archivo pendiente a ser borrado: [?%.8s%.3s]\n", entry->filename, entry->extension);
+            return;
         case 0xE5:
             printf("Archivo borrado: [?%.8s%.3s]\n", entry->filename, entry->extension);
             return;
@@ -23,7 +26,7 @@ void print_file_info(Fat12Entry *entry) {
 }
 
 int main() {
-    FILE * in = fopen("/dev/loop0", "rb");
+    FILE * in = fopen(FILE_TO_OPEN, "rb");
     int i;
     PartitionTable pt[4];
     Fat12BootSector bs;

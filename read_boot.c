@@ -3,7 +3,7 @@
 #include "datastructures.h"
 
 int main() {
-    FILE * in = fopen("test.img", "rb");
+    FILE * in = fopen(FILE_TO_OPEN, "rb");
     int i;
     PartitionTable pt[4];
     Fat12BootSector bs;
