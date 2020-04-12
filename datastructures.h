@@ -10,23 +10,23 @@ typedef struct {
 } __attribute((packed)) PartitionTable;
 
 typedef struct {
-    unsigned char jmp[3];
+    char jmp[3];
     char oem[8];
     unsigned short sector_size;
     unsigned char sector_cluster;
     unsigned short reserved_sectors;
     unsigned char number_of_fats;
-    unsigned short root_dir_entries;
-    unsigned short sector_volumen;
-    unsigned char descriptor;
-    unsigned short fat_size_sectors;
-    unsigned short sector_track;
-    unsigned short headers;
-    unsigned int sector_hidden;
+    unsigned short root_dir_files;
+    unsigned short sectors_quantity_low;
+    char medita_type;
+    unsigned short fat_sector_size;
+    unsigned short sectors_per_track;
+    unsigned short heads;
     unsigned int sector_partition;
-    unsigned char physical_device;
-    unsigned char current_header;
-    unsigned char firm;
+    unsigned int sectors_quantity_high;
+    char bios_number;
+    char not_used;
+    char extended_boot_signature;
     unsigned int volume_id;
     char volume_label[11];
     char fs_type[8];
