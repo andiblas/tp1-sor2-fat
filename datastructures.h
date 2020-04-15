@@ -1,4 +1,5 @@
 #define FILE_TO_OPEN "/dev/loop0"
+//#define FILE_TO_OPEN "/dev/loop25" // Depende la maquina cambia el loop. 
 
 typedef struct {
     unsigned char first_byte;
