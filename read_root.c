@@ -52,11 +52,12 @@ int main() {
     
     printf("En  0x%X, sector size %d, FAT size %d sectors, %d FATs\n\n", 
            ftell(in), bs.sector_size, bs.fat_sector_size, bs.number_of_fats);
-           
-    fseek(in, (bs.reserved_sectors-1 + bs.fat_sector_size * bs.number_of_fats) *
-          bs.sector_size, SEEK_CUR);
+
+    int firstEntryPos = (bs.reserved_sectors-1 + bs.fat_sector_size * bs.number_of_fats) *
+          bs.sector_size;
+    fseek(in, firstEntryPos, SEEK_CUR);
     
-    printf("Root dir_entries %d \n", bs.root_dir_files);
+    printf("Root dir_entries %d. First entry at: 0x%X\n", bs.root_dir_files, firstEntryPos);
     for(i=0; i<bs.root_dir_files; i++) {
         fread(&entry, sizeof(entry), 1, in);
         print_file_info(&entry);
