@@ -47,9 +47,9 @@ typedef struct
     unsigned char creation_time_hours_minutes_seconds[2];
     unsigned char creation_date[2];
     unsigned char access_date[2];
-    unsigned short highorder_address[2];
+    unsigned short highorder_address;
     unsigned char modified_time[2];
     unsigned char modified_date[2];
     unsigned short loworder_address;
-    int file_size;
+    unsigned int file_size;
 } __attribute((packed)) Fat12Entry;
