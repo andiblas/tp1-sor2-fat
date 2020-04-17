@@ -41,7 +41,7 @@ typedef struct
 {
     char filename[8];
     char extension[3];
-    char attributes;
+    unsigned char attributes[1];
     char reserved;
     char creation_time_seconds;
     char creation_time_hours_minutes_seconds[2];
