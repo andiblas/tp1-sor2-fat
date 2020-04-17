@@ -8,25 +8,30 @@ void print_file_contents(Fat12Entry *entry, Fat12BootSector *bootSector)
     dataArea += bootSector->root_dir_files * sizeof(Fat12Entry);
     int clusterSize = bootSector->fat_sector_size * bootSector->sectors_per_track;
 
+
     int fileContentPhysicalAddress = dataArea + ((entry->loworder_address - 2) * clusterSize);
     FILE *file = fopen(FILE_TO_OPEN, "rb");
     fseek(file, fileContentPhysicalAddress, SEEK_SET);
 
+    printf("DataArea: %d\n", dataArea);
+    printf("FileContentPhysicalAddress of 0x%X:\n", fileContentPhysicalAddress);
+
+
     char content[entry->file_size];
     fread(content, entry->file_size, 1, file);
-    printf("Contents of %s:\n", entry->filename, content);
+    printf("Filename of %s:\n", entry->filename);
+    printf("Extension of 0x%X:\n", entry->extension);
+    printf("Address of 0x%X:\n", entry->loworder_address);
+    printf("File size of %d:\n", entry->file_size);
+    printf("Attributes of %d:\n", entry->attributes);
     printf("%s\n", content);
     fclose(file);
 }
 
 void print_files_only(Fat12Entry *entry, Fat12BootSector *bootSector)
 {
-    printf("Entry.attributes -> %s\n", entry->attributes);
-    printf("Que es 0x20? -> %X\n", 0x20);
-    printf("Es 0x20 = a Entry.attributes? -> %s\n", entry->attributes == 0x20);
     if (entry->attributes[0] == 0x20)
     {
-        printf("entre aca\n");
         print_file_contents(entry, bootSector);
     }
 }
