@@ -39,17 +39,17 @@ typedef struct
 
 typedef struct
 {
-    char filename[8];
-    char extension[3];
+    unsigned char filename[8];
+    unsigned char extension[3];
     unsigned char attributes[1];
-    char reserved;
-    char creation_time_seconds;
-    char creation_time_hours_minutes_seconds[2];
-    char creation_date[2];
-    char access_date[2];
+    unsigned char reserved;
+    unsigned char creation_time_seconds;
+    unsigned char creation_time_hours_minutes_seconds[2];
+    unsigned char creation_date[2];
+    unsigned char access_date[2];
     unsigned short highorder_address[2];
-    char modified_time[2];
-    char modified_date[2];
+    unsigned char modified_time[2];
+    unsigned char modified_date[2];
     unsigned short loworder_address;
     int file_size;
 } __attribute((packed)) Fat12Entry;

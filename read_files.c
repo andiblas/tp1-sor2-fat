@@ -21,6 +21,9 @@ void print_file_contents(Fat12Entry *entry, Fat12BootSector *bootSector)
 
 void print_files_only(Fat12Entry *entry, Fat12BootSector *bootSector)
 {
+    printf("Entry.attributes -> %s\n", entry->attributes);
+    printf("Que es 0x20? -> %X\n", 0x20);
+    printf("Es 0x20 = a Entry.attributes? -> %s\n", entry->attributes == 0x20);
     if (entry->attributes[0] == 0x20)
     {
         printf("entre aca\n");
