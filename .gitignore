@@ -54,3 +54,4 @@ read_boot
 read_first_partition
 read_mbr
 read_root
+read_files
