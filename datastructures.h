@@ -13,7 +13,7 @@ typedef struct
 
 typedef struct
 {
-    char jmp[3];
+    unsigned char jmp[3];
     char oem[8];
     unsigned short sector_size;
     unsigned char sector_cluster;
@@ -25,12 +25,12 @@ typedef struct
     unsigned short fat_sector_size;
     unsigned short sectors_per_track;
     unsigned short heads;
-    unsigned int sector_partition;
-    unsigned int sectors_quantity_high;
+    unsigned char sector_partition[4];
+    unsigned char sectors_quantity_high[4];
     char bios_number;
     char not_used;
     char extended_boot_signature;
-    unsigned int volume_id;
+    unsigned char volume_id[4];
     char volume_label[11];
     char fs_type[8];
     char boot_code[448];
