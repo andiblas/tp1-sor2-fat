@@ -4,26 +4,20 @@
 
 void print_file_contents(Fat12Entry *entry, Fat12BootSector *bootSector)
 {
-    int dataArea = (bootSector->reserved_sectors - 1 + bootSector->fat_sector_size * bootSector->number_of_fats) * bootSector->sector_size;
+    // comenzamos a calcular donde comienzan los datos.
+    int dataArea = (bootSector->reserved_sectors + bootSector->fat_sector_size * bootSector->number_of_fats) * bootSector->sector_size;
     dataArea += bootSector->root_dir_files * sizeof(Fat12Entry);
-    int clusterSize = bootSector->fat_sector_size * bootSector->sectors_per_track;
+    int clusterSize = bootSector->sector_size * bootSector->sector_cluster;
 
-
+    // los clusters comienzan desde el dos, es por eso que sustraemos 2.
     int fileContentPhysicalAddress = dataArea + ((entry->loworder_address - 2) * clusterSize);
     FILE *file = fopen(FILE_TO_OPEN, "rb");
     fseek(file, fileContentPhysicalAddress, SEEK_SET);
 
-    printf("DataArea: %d\n", dataArea);
-    printf("FileContentPhysicalAddress of 0x%X:\n", fileContentPhysicalAddress);
-
-
     char content[entry->file_size];
     fread(content, entry->file_size, 1, file);
     printf("Filename of %s:\n", entry->filename);
-    printf("Extension of 0x%X:\n", entry->extension);
-    printf("Address of 0x%X:\n", entry->loworder_address);
     printf("File size of %d:\n", entry->file_size);
-    printf("Attributes of %d:\n", entry->attributes);
     printf("%s\n", content);
     fclose(file);
 }
