@@ -12,23 +12,22 @@ void print_file_contents(Fat12Entry *entry, Fat12BootSector *bootSector)
     // los clusters comienzan desde el dos, es por eso que sustraemos 2.
     int fileContentPhysicalAddress = dataArea + ((entry->loworder_address - 2) * clusterSize);
     
-    entry->filename[0] = "R";
+    //entry->filename[0] = 'B'; // HORRIBLE PERO LO DEJAMOS POR AHORA
     FILE *file = fopen(FILE_TO_OPEN, "r+");
     fseek(file, fileContentPhysicalAddress, SEEK_SET);
-
+    
     char content[entry->file_size];
     fread(content, entry->file_size, 1, file);
+    printf("Filename of %s:\n", entry->filename);
     printf("%s\n", content);
-    fwrite(entry, sizeof(Fat12Entry), 1, file);
-    printf("Archivo recuperado %s\n", entry->filename);
+    // fwrite(content,entry->file_size,1,file);
     fclose(file);
 }
 
 void print_deleted_files(Fat12Entry *entry, Fat12BootSector *bootSector)
 {
     if ((entry->filename[0] == 0xE5) ) {
-        if (entry->attributes[0] == 0x20)
-        {
+        if (entry->attributes[0] == 0x20){
             print_file_contents(entry, bootSector);
         }
     }
