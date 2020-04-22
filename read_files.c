@@ -30,6 +30,16 @@ void print_files_only(Fat12Entry *entry, Fat12BootSector *bootSector)
     }
 }
 
+void print_deleted_files(Fat12Entry *entry, Fat12BootSector *bootSector)
+{
+    if ((entry->filename[0] == 0xE5) ) {
+        if (entry->attributes[0] == 0x20)
+        {
+            print_file_contents(entry, bootSector);
+        }
+    }
+}
+
 int main()
 {
     FILE *in = fopen(FILE_TO_OPEN, "rb");
@@ -70,6 +80,18 @@ int main()
         fread(&entry, sizeof(entry), 1, in);
         print_files_only(&entry, &bs);
     }
+    
+    fseek(in, 0, SEEK_SET);
+    fread(&bs, sizeof(Fat12BootSector), 1, in);
+    fseek(in, (bs.reserved_sectors - 1 + bs.fat_sector_size * bs.number_of_fats) * bs.sector_size, SEEK_CUR);
+    
+    printf("Deleted files: \n");
+    for (i = 0; i < bs.root_dir_files; i++)
+    {
+        fread(&entry, sizeof(entry), 1, in);
+        print_deleted_files(&entry, &bs);
+    }
+
 
     printf("\nLeido Root directory, ahora en 0x%X\n", ftell(in));
     fclose(in);
