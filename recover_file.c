@@ -12,15 +12,20 @@ void print_file_contents(Fat12Entry *entry, Fat12BootSector *bootSector)
     // los clusters comienzan desde el dos, es por eso que sustraemos 2.
     int fileContentPhysicalAddress = dataArea + ((entry->loworder_address - 2) * clusterSize);
     
-    //entry->filename[0] = 'B'; // HORRIBLE PERO LO DEJAMOS POR AHORA
+    entry->filename[0] = 'B'; // HORRIBLE PERO LO DEJAMOS POR AHORA
     FILE *file = fopen(FILE_TO_OPEN, "r+");
     fseek(file, fileContentPhysicalAddress, SEEK_SET);
     
     char content[entry->file_size];
     fread(content, entry->file_size, 1, file);
-    printf("Filename of %s:\n", entry->filename);
-    printf("%s\n", content);
-    // fwrite(content,entry->file_size,1,file);
+    //fclose(file);
+    if (entry->file_size > 0){
+        //FILE *file = fopen(FILE_TO_OPEN, "w");
+        FILE *f = fopen("/mnt/recuperado.txt", "w");        
+        fprintf(f,content);
+        printf("Archivo recuperado: %s\n", entry->filename);
+        printf("%s\n", content);
+    }
     fclose(file);
 }
 
