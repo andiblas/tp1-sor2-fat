@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "datastructures.h"
 
-void print_file_contents(Fat12Entry *entry, Fat12BootSector *bootSector)
+void recover_file_contents(Fat12Entry *entry, Fat12BootSector *bootSector)
 {
     // comenzamos a calcular donde comienzan los datos.
     int dataArea = (bootSector->reserved_sectors + bootSector->fat_sector_size * bootSector->number_of_fats) * bootSector->sector_size;
@@ -32,7 +32,7 @@ void print_deleted_files(Fat12Entry *entry, Fat12BootSector *bootSector)
 {
     if ((entry->filename[0] == 0xE5) ) {
         if (entry->attributes[0] == 0x20){
-            print_file_contents(entry, bootSector);
+            recover_file_contents(entry, bootSector);
         }
     }
 }
